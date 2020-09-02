@@ -64,7 +64,7 @@ mv dcnn_feature.txt alpha.txt
 mv dcnn_feature.txt beta.txt
 echo "=======Information of the generated training dataset========"
 python3.6 create_tensor.py
-rm defect.txt 2H_1T.txt
+rm defect.txt 2H_1T.txt beta.txt alpha.txt interface_defect.txt
 mv train_XX.p train_YY.npy train_pos.npy ../data/.
 make clean
 cd ..
