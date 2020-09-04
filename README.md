@@ -15,15 +15,14 @@ This repository includes (1) C code to construct training dataset for VAE and Co
    - sklearn
    - numpy
 #### 1. Dataset Generation 
-Training dataset generation involves construction of random tensors of size 64&times;64&times;3 from the MD fracture simulation trajectory of MoWSe<sub>2</sub>. To do that run the script construct_data.sh</br> 
+&nbsp;&nbsp;&nbsp;Training dataset generation involves construction of random tensors of size 64&times;64&times;3 from the MD fracture simulation trajectory of MoWSe<sub>2</sub>. To do that run the script construct_data.sh</br>
         ```sh construct_data.sh```
-   
-* *construct_data.sh does the following in sequence* 
-      * Find 2H and 1T  structure inside the fracture data. The code for this inside the folder  `find_structure`. Its input is a MD fracture frame in xyz file format and it writes a file called structure.xyz where atoms are labeled as 2H, 1T or defects
-      * Find defect ring structure insde the 1T phase of the fracture data. The code for this inside the folder `find_ring`. The input to the code is generated structure.xyz from the previous step, and it writes output file called structure_ring.xyz containing the information about defect ring structure in the 1T phase
-      * Find interfact between 2H and 1T regions inside the fracture data. The code for this inside the folder `find_interface`. 
-      * Find alpha and beta structures at the interface region. The code for this inside the folder `find_interface_structure`. It writes an output file called train.xyz, where each atom is labeled as 2H, 1T, defect, alpha and beta.
-      * Construct  n&times;64&times;64&times;3 tensors using the processed fracture frame. The code for this inside the folder `construct_tensor`. It takes the frame train.xyz, and construct random patches of 64&times;64&times;3 tensors which contains patchs of 2H, 1T, defect,  _&alpha;_ and _&beta;_ phases. This section runs the following command 
+* ```construct_data.sh does the following in sequence```
+   * Find 2H and 1T  structure inside the fracture data. The code for this inside the folder  `find_structure`. Its input is a MD fracture frame in xyz file format and it writes a file called structure.xyz where atoms are labeled as 2H, 1T or defects
+   * Find defect ring structure insde the 1T phase of the fracture data. The code for this inside the folder `find_ring`. The input to the code is generated structure.xyz from the previous step, and it writes output file called structure_ring.xyz containing the information about defect ring structure in the 1T phase
+   * Find interfact between 2H and 1T regions inside the fracture data. The code for this inside the folder `find_interface`. 
+   * Find alpha and beta structures at the interface region. The code for this inside the folder `find_interface_structure`. It writes an output file called train.xyz, where each atom is labeled as 2H, 1T, defect, alpha and beta.
+   * Construct  n&times;64&times;64&times;3 tensors using the processed fracture frame. The code for this inside the folder `construct_tensor`. It takes the frame train.xyz, and construct random patches of 64&times;64&times;3 tensors which contains patchs of 2H, 1T, defect,  _&alpha;_ and _&beta;_ phases. This section runs the following command 
            * ```./c_feature ../train.xyz $limit $tag``` </br>  *Here, train.xyz=Processed MD frame, $limit=max number of tensors to be generated and $tag=1,2,3,4,5 corrosponds to regions consisting of 2H, 1T, defects, interface defects, _&alpha;_ and _&beta;_ phases, respectively.* </br>
            * ```python3.6 create_tensor.py```
 
